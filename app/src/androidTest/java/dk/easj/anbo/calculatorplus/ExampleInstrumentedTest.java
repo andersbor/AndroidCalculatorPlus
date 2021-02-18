@@ -6,8 +6,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.platform.app.InstrumentationRegistry;
-import androidx.test.rule.ActivityTestRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static androidx.test.espresso.Espresso.onView;
@@ -27,9 +27,10 @@ import static org.junit.Assert.*;
  */
 @RunWith(AndroidJUnit4.class)
 public class ExampleInstrumentedTest {
+    // https://developer.android.com/training/testing/ui-testing/espresso-testing
     @Rule
-    public ActivityTestRule<MainActivity> activityRule = new ActivityTestRule<>(MainActivity.class);
-    // gradle:   androidTestImplementation 'androidx.test:rules:1.2.0'
+    public ActivityScenarioRule<MainActivity> activityRule
+            = new ActivityScenarioRule<>(MainActivity.class);
 
     @Test
     public void useAppContext() {
@@ -46,6 +47,7 @@ public class ExampleInstrumentedTest {
         onView(withId(R.id.mainNumber1EditText)).perform(typeText("4")); // adds extra 4, so now it's 44
         onView(withId(R.id.mainNumber2EditText)).perform(clearText());
         onView(withId(R.id.mainCalculateButton)).perform(click(), closeSoftKeyboard());
+        // notice closeSoftKeyboard()
         onView(withId(R.id.mainMessageTextView)).check(matches(withText("Not a number")));
     }
 }
